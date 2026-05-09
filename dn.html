@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>启元 AI✨ - 人工智能创新时代（概念站）</title>
+    <style>
+        /* 基础重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: #0a0a0f;
+            overflow-x: hidden;
+        }
+
+        /* 唯一修改：全屏宽屏 */
+        .container {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 auto !important;
+            padding: 0 80px !important;
+        }
+
+        /* 导航栏 - 保持窄高度 */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 30px rgba(0, 200, 255, 0.1);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 200, 255, 0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 80px;
+            max-width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 30px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00d4ff, #00ff88, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-icon {
+            font-size: 36px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #00ff88);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #00d4ff;
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-outline {
+            padding: 12px 30px;
+            border: 2px solid #00d4ff;
+            background: transparent;
+            color: #00d4ff;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-outline:hover {
+            background: #00d4ff;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-glow {
+            padding: 12px 30px;
+            border: none;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            color: #0a0a0f;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: #00d4ff;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* 首屏 - 不遮挡 + 宽屏 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 100%);
+            padding-top: 70px;
+            width: 100%;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 212, 255, 0.03) 2px,
+                    rgba(0, 212, 255, 0.03) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 136, 0.03) 2px,
+                    rgba(0, 255, 136, 0.03) 4px
+                );
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 1600px;
+            padding: 0 20px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            color: #00d4ff;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 82px;
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #00d4ff, #00ff88, #ff00ff, #00d4ff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite, fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: #b0b0b0;
+            margin-bottom: 50px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 80px;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 15px;
+            color: #808080;
+        }
+
+        /* 粒子背景 */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            the;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            animation: float 15s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+            25% { transform: translateY(-100px) translateX(50px); opacity: 1; }
+            50% { transform: translateY(-200px) translateX(-30px); opacity: 0.8; }
+            75% { transform: translateY(-150px) translateX(80px); opacity: 0.5; }
+        }
+
+        /* 核心领域 - 宽屏 */
+        .domains {
+            padding: 120px 0;
+            background: #0a0a0f;
+            position: relative;
+            width: 100%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            color: #00d4ff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #b0b0b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-desc {
+            font-size: 18px;
+            color: #808080;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        .domain-card {
+            background: linear-gradient(135deg, rgba(20, 20, 35, 0.8), rgba(10, 10, 15, 0.9));
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 45px 35px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .domain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #00ff88, #ff00ff);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .domain-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .domain-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.15);
+        }
+
+        .domain-icon {
+            font-size: 56px;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .domain-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .domain-card p {
+            color: #a0a0a0;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .domain-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .domain-feature {
+            padding: 6px 15px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 15px;
+            font-size: 13px;
+            color: #00d4ff;
+            font-weight: 500;
+        }
+
+        /* 技术优势 - 宽屏 */
+        .tech {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #0a0a0f 0%, #12121a 100%);
+            position: relative;
+            width: 100%;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        .tech-card {
+            text-align: center;
+            padding: 50px 30px;
+            background: rgba(20, 20, 35, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 20px;
+            transition: all 0.4s;
+        }
+
+        .tech-card:hover {
+            background: rgba(20, 20, 35, 0.8);
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 212, 255, 0.1);
+        }
+
+        .tech-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 255, 136, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .tech-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .tech-card p {
+            color: #909090;
+            line-height: 1.8;
+        }
+
+        /* 愿景 */
+        .vision {
+            padding: 120px 0;
+            background: #0a0a0f;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+
+        .vision-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        .vision-quote {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #00d4ff, #00ff88, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .vision-text {
+            font-size: 20px;
+            color: #b0b0b0;
+            line-height: 2;
+            margin-bottom: 50px;
+        }
+
+        .vision-btns {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* 联系我们 - 宽屏 */
+        .contact {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #0a0a0f 0%, #0f0f16 100%);
+            width: 100%;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        .contact-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .contact-info p {
+            color: #909090;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .info-text h4 {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .info-text p {
+            color: #808080;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .contact-form {
+            background: rgba(20, 20, 35, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #c0c0c0;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            color: #0a0a0f;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        /* 页脚 - 宽屏 */
+        .footer {
+            background: #050508;
+            color: #fff;
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            width: 100%;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto 60px;
+            padding: 0 80px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: #808080;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00d4ff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #00d4ff;
+            color: #0a0a0f;
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #808080;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .footer-col ul li a:hover {
+            color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom p {
+            color: #606060;
+            font-size: 14px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1200px) {
+            .domains-grid { grid-template-columns: repeat(2, 1fr); }
+            .tech-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu, .nav-btns { display: none; }
+            .hamburger { display: flex; }
+            .hero-title { font-size: 42px; }
+            .domains-grid, .tech-grid, .footer-grid, .contact-grid { grid-template-columns: 1fr; }
+            .navbar, .domains-grid, .tech-grid, .contact-grid, .footer-grid { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <span class="logo-icon"><img border="0" src="http://pan.cisa.cc/view.php/c9ce45cd84ba85a96a92c8596df29b98.png" width="50" height="50"></p></span>
+                <span>元 AI✨</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">域名释义</a></li>
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#domains">创新领域</a></li>
+                <li><a href="#tech">技术优势</a></li>
+                <li><a href="#vision">愿景使命</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <div class="nav-btns">
+                <button class="btn-outline">了解更多</button>
+                <button class="btn-glow">加入创新</button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">🚀 2026 · 人工智能创新纪元</div>
+            <h1 class="hero-title">启元 AI<br>人工智能创新时代</h1>
+            <p class="hero-subtitle">我们站在智能革命的临界点，用前沿 AI 技术重塑产业、赋能人类，开启前所未有的创新纪元。从深度学习到通用智能，从场景应用到生态构建，启元 AI 引领全球人工智能创新浪潮。</p>
+            <div class="hero-btns">
+                <button class="btn-glow" style="padding: 18px 45px; font-size: 16px;">探索创新</button>
+                <button class="btn-outline" style="padding: 18px 45px; font-size: 16px;">观看演示</button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">专利技术</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">企业合作</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">覆盖国家</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10 亿+</div>
+                    <div class="stat-label">服务用户</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="domains" class="domains">
+        <div class="section-header fade-in">
+            <span class="section-tag">INNOVATION DOMAINS</span>
+            <h2 class="section-title">六大创新领域</h2>
+               <p class="section-desc">启元 AI 深耕人工智能核心技术，布局六大关键领域，推动技术从实验室走向产业应用，构建开放共赢的智能生态。</p>
+        </div>
+        <div class="domains-grid">
+            <div class="domain-card fade-in">
+                <span class="domain-icon">🧠</span>
+                <h3>深度学习</h3>
+                <p>自主研发新一代神经网络架构，在图像识别、自然语言处理等领域实现突破性进展，模型精度领先行业15%以上。</p>
+                <div class="domain-features">
+                    <span class="domain-feature">CNN</span>
+                    <span class="domain-feature">Transformer</span>
+                    <span class="domain-feature">GAN</span>
+                </div>
+            </div>
+            <div class="domain-card fade-in">
+                <span class="domain-icon">🤖</span>
+                <h3>智能机器人</h3>
+                <p>融合感知、决策、执行全链路技术，打造工业、服务、医疗等多场景智能机器人解决方案，实现人机协作新范式。</p>
+                <div class="domain-features">
+                    <span class="domain-feature">SLAM</span>
+                    <span class="domain-feature">路径规划</span>
+                    <span class="domain-feature">力控</span>
+                </div>
+            </div>
+            <div class="domain-card fade-in">
+                <span class="domain-icon">🏥</span>
+                <h3>智慧医疗</h3>
+                <p>AI辅助诊断、药物研发、健康管理全流程赋能，已助力300+医疗机构提升诊疗效率，误诊率降低40%。</p>
+                <div class="domain-features">
+                    <span class="domain-feature">影像分析</span>
+                    <span class="domain-feature">基因测序</span>
+                    <span class="domain-feature">虚拟医生</span>
+                </div>
+            </div>
+            <div class="domain-card fade-in">
+                <span class="domain-icon">🚗</span>
+                <h3>自动驾驶</h3>
+                <p>L4级自动驾驶技术成熟落地，累计测试里程超1亿公里，覆盖城市道路、高速、园区全场景，安全零事故。</p>
+                <div class="domain-features">
+                    <span class="domain-feature">多传感器融合</span>
+                    <span class="domain-feature">V2X</span>
+                    <span class="domain-feature">高精地图</span>
+                </div>
+            </div>
+            <div class="domain-card fade-in">
+                <span class="domain-icon">🏭</span>
+                <h3>智能制造</h3>
+                <p>工业AI质检、预测性维护、生产优化全链路赋能，帮助制造企业降本增效30%，已服务500+工厂。</p>
+                <div class="domain-features">
+                    <span class="domain-feature">数字孪生</span>
+                    <span class="domain-feature">边缘计算</span>
+                    <span class="domain-feature">工业物联网</span>
+                </div>
+            </div>
+            <div class="domain-card fade-in">
+                <span class="domain-icon">🌐</span>
+                <h3>智慧城市</h3>
+                <p>交通优化、公共安全、能源管理一体化平台，助力城市治理智能化升级，已落地20+智慧城市项目。</p>
+                <div class="domain-features">
+                    <span class="domain-feature">大数据分析</span>
+                    <span class="domain-feature">IoT平台</span>
+                    <span class="domain-feature">云平台</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech" class="tech">
+        <div class="section-header fade-in">
+            <span class="section-tag">TECHNOLOGY ADVANTAGE</span>
+            <h2 class="section-title">核心技术优势</h2>
+            <p class="section-desc">依托顶尖研发团队和持续创新投入，构建全方位技术壁垒，为产业智能化转型提供坚实支撑。</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card fade-in">
+                <div class="tech-icon">⚡</div>
+                <h3>高性能计算</h3>
+                <p>自研AI芯片+分布式训练框架，算力效率提升300%，支持千亿参数模型训练</p>
+            </div>
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🔒</div>
+                <h3>数据安全</h3>
+                <p>联邦学习+隐私计算技术，实现数据可用不可见，符合GDPR等全球合规标准</p>
+            </div>
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🔄</div>
+                <h3>持续学习</h3>
+                <p>在线学习+迁移学习架构，模型可实时更新迭代，适应动态场景需求</p>
+            </div>
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🎯</div>
+                <h3>精准推理</h3>
+                <p>模型压缩+量化技术，推理速度提升5倍，部署成本降低60%</p>
+            </div>
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🌍</div>
+                <h3>多模态融合</h3>
+                <p>视觉+语言+音频多模态联合建模，实现跨模态理解与生成能力</p>
+            </div>
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🔧</div>
+                <h3>开放平台</h3>
+                <p>一站式AI开发平台，提供模型训练、部署、监控全生命周期管理工具</p>
+            </div>
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🧩</div>
+                <h3>模块化架构</h3>
+                <p>组件化可插拔架构设计，支持快速定制开发，项目交付周期缩短40%以上</p>
+            </div>
+            <div class="tech-card fade-in">
+                <div class="tech-icon">📊</div>
+                <h3>智能决策</h3>
+                <p>融合强化学习与知识图谱技术，实现复杂场景下的自主决策与风险预判</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" class="vision">
+        <div class="vision-content fade-in">
+            <span class="section-tag">VISION & MISSION</span>
+            <h2 class="section-title">我们的愿景</h2>
+            <div class="vision-quote">"让智能技术惠及每一个人，<br>共创人类美好未来"</div>
+            <p class="vision-text">启元 AI 坚信人工智能是第四次工业革命的核心驱动力。我们致力于打破技术壁垒，降低AI应用门槛，让中小企业、科研机构、个人开发者都能便捷使用先进AI技术。通过开放合作、持续创新，构建包容、可持续的智能生态，推动人类社会向更高文明阶段迈进。</p>
+            <div class="vision-btns">
+                <button class="btn-glow" style="padding: 16px 40px;">加入合作伙伴</button>
+                <button class="btn-outline" style="padding: 16px 40px;">查看技术白皮书</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="section-header fade-in">
+            <span class="section-tag">CONTACT US</span>
+            <h2 class="section-title">联系我们</h2>
+            <p class="section-desc">无论您是寻求技术合作、产品咨询还是投资洽谈，我们都期待与您的交流。</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info fade-in">
+                <h3>携手共创智能未来</h3>
+                <p>我们的专业团队将在24小时内回复您的咨询，为您提供定制化解决方案。</p>
+                <div class="info-list">
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div class="info-text">
+                            <h4>商务合作</h4>
+                            <p>+86 400-888-9999</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📧</div>
+                        <div class="info-text">
+                            <h4>邮箱联系</h4>
+                            <p>contact@ainovaage.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-text">
+                            <h4>公司地址</h4>
+                            <p>中国·北京·中关村科技园A座28层</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🕐</div>
+                        <div class="info-text">
+                            <h4>服务时间</h4>
+                            <p>周一至周五 9:00-18:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form fade-in">
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" placeholder="请输入您的姓名" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" placeholder="请输入您的邮箱" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">电话</label>
+                    <input type="tel" id="phone" placeholder="请输入联系电话">
+                </div>
+                <div class="form-group">
+                    <label for="message">留言内容</label>
+                    <textarea id="message" placeholder="请描述您的需求或问题" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">提交咨询</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">
+                    <span class="logo-icon">✨</span>
+                    <span>✨启元 AI</span>
+                </div>
+                <p>引领人工智能创新浪潮，开启智能新时代。我们致力于通过前沿AI技术，赋能产业、造福人类，构建开放共赢的智能生态。</p>
+                <div class="social-links">
+                    <a href="#" title="微信">💬</a>
+                    <a href="#" title="微博">🐦</a>
+                    <a href="#" title="LinkedIn">💼</a>
+                    <a href="#" title="GitHub">🐙</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>解决方案</h4>
+                <ul>
+                    <li><a href="#">智慧医疗</a></li>
+                    <li><a href="#">自动驾驶</a></li>
+                    <li><a href="#">智能制造</a></li>
+                    <li><a href="#">智慧城市</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>关于我们</h4>
+                <ul>
+                    <li><a href="#">企业介绍</a></li>
+                    <li><a href="#">研发团队</a></li>
+                    <li><a href="#">合作伙伴</a></li>
+                    <li><a href="#">新闻动态</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>法律信息</h4>
+                <ul>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                    <li><a href="#">知识产权</a></li>
+                    <li><a href="#">法律声明</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 启元 AI 保留所有权利。</p>
+        <p style="margin-top: 1.15rem; font-size: 0.91rem;">本页面仅用于域名概念展示站，不构成任何商业承诺。欢迎各界朋友洽谈合作ai@altoai.cn</p>
+        </div>
+    </footer>
+
+    <script>
+        // 粒子背景
+        const particles = document.getElementById('particles');
+        for (let i = 0; i < 150; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            p.style.width = p.style.height = Math.random() * 4 + 1 + 'px';
+            p.style.animationDelay = Math.random() * 15 + 's';
+            particles.appendChild(p);
+        }
+
+        // 滚动动画
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // 导航高亮
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('section').forEach(sec => {
+                if (scrollY >= sec.offsetTop - 100) current = sec.id;
+            });
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+                if (link.href.includes(current)) link.classList.add('active');
+            });
+        });
+    </script>
+</body><body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+</html>
